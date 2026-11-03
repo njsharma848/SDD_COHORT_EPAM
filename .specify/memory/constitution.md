@@ -1,50 +1,46 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Calorie and Nutrition Tracker Constitution
+
+## Purpose
+This constitution defines the operating principles for a small, fundamentals-level calorie and nutrition tracker. It ensures the project remains aligned to its specification, protects correctness, and preserves disciplined, transparent collaboration.
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### 1. Specification-First
+Short statement: The specification is the source of truth.
+Why it matters: Without a clear contract, work can drift, duplicate effort, and produce inconsistent results.
+How it applies here: All code and tests must trace back to the approved specification. Any change to scope or acceptance criteria is recorded before implementation changes.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### 2. Test Coverage for Business Rules
+Short statement: Every business rule and acceptance criterion must be covered by an automated test.
+Why it matters: Business rules define user-visible correctness, and untested rules are easy to break silently.
+How it applies here: Rules covering daily targets, meal totals, comparisons against goals, and invalid input must each have explicit automated test coverage.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### 3. Input Validation and Safe Failure
+Short statement: All user input must be validated, and invalid input must fail clearly without changing existing data.
+Why it matters: Invalid data can create incorrect nutrition totals and undermine trust in the application.
+How it applies here: Missing values, negative numbers, invalid formats, and impossible inputs must be rejected with a clear error. Existing records remain unchanged when invalid input is submitted.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### 4. Simplicity Appropriate to Scope
+Short statement: Prefer the simplest design that satisfies the specification.
+Why it matters: Small projects become fragile when they add speculative features or unnecessary complexity.
+How it applies here: We will implement only what the current specification requires for daily tracking of calories and protein, and avoid features not justified by the project goals.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### 5. No Secrets in the Repository
+Short statement: No passwords, tokens, or API keys are ever committed.
+Why it matters: Secret leakage creates serious security risk and undermines the integrity of the project.
+How it applies here: Any required configuration values are managed through environment variables or a local .env file that is excluded from version control.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### 6. Code Standards
+Short statement: Python code follows PEP 8, uses type hints, and is organized into small, single-responsibility modules.
+Why it matters: Clear, consistent code is easier to review, test, and maintain.
+How it applies here: All code should be readable, explicit, and structured around a single responsibility rather than broad or mixed-purpose modules.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### 7. Transparent AI Collaboration
+Short statement: All AI-assisted steps are logged with the prompt used, the output received, and whether it was accepted, modified, or rejected.
+Why it matters: AI-generated work must remain accountable, reviewable, and understandable.
+How it applies here: Any AI-assisted guidance or code contribution is recorded with the prompt, the response, and the reasoning behind the final decision.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs the project’s work. Compliance is required before any change is considered complete. If a proposal conflicts with specification integrity, test coverage, safe validation, scope discipline, or transparent collaboration, it must be revised or explicitly approved before implementation continues.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-03 | **Last Amended**: 2026-11-03
