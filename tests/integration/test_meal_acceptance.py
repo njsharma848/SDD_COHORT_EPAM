@@ -72,3 +72,120 @@ def test_tc005_ac005_zero_calories_and_protein_accepted(tmp_path):
         assert meal.protein_tenths == 0
     finally:
         conn.close()
+
+from calorie_tracker.validation import ValidationError
+
+
+def test_tc003_ac003_future_date_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "Too soon", "100", "5", date_raw="2026-11-04", today=today)
+            assert False, "Expected ValidationError for a future date"
+        except ValidationError:
+            pass
+
+        cal, prot = repository.daily_totals(conn, date(2026, 11, 4))
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc006a_ac006a_meal_exactly_at_maximum_accepted(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        meal = service.create_meal(conn, "Max meal", "10000", "1000", today=today)
+        assert meal.calories_tenths == 100000
+        assert meal.protein_tenths == 10000
+    finally:
+        conn.close()
+
+
+def test_tc006b_ac006b_meal_above_maximum_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "Too many calories", "10000.1", "5", today=today)
+            assert False, "Expected ValidationError above the calorie maximum"
+        except ValidationError:
+            pass
+
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc007_ac007_missing_name_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "", "100", "5", today=today)
+            assert False, "Expected ValidationError for a missing name"
+        except ValidationError:
+            pass
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc007_ac007_non_numeric_calories_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "Snack", "abc", "5", today=today)
+            assert False, "Expected ValidationError for non-numeric calories"
+        except ValidationError:
+            pass
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc007_ac007_negative_protein_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "Snack", "100", "-5", today=today)
+            assert False, "Expected ValidationError for negative protein"
+        except ValidationError:
+            pass
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc007_ac007_too_many_decimal_places_rejected_and_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        try:
+            service.create_meal(conn, "Snack", "12.34", "5", today=today)
+            assert False, "Expected ValidationError for more than one decimal place"
+        except ValidationError:
+            pass
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc008_ac008_meal_recorded_successfully_with_no_target_set(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        assert repository.latest_target_for_date(conn, today) is None
+
+        meal = service.create_meal(conn, "No target yet", "300", "20", today=today)
+        assert meal.id is not None
+    finally:
+        conn.close()

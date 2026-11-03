@@ -72,7 +72,7 @@
   **Covers**: AC-001, AC-002, AC-004, AC-005  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k 'tc001 or tc002 or tc004 or tc005'` passes.
 
-- [ ] T012 [US1] Add tests named `test_tc003_ac003_...`, `test_tc006a_ac006a_...`, `test_tc006b_ac006b_...`, `test_tc007_ac007_...`, and `test_tc008_ac008_...` in `tests/integration/test_meal_acceptance.py`; cover future dates, meal boundaries, invalid input, and logging without a target, asserting data is unchanged after rejection.  
+- [x] T012 [US1] Add tests named `test_tc003_ac003_...`, `test_tc006a_ac006a_...`, `test_tc006b_ac006b_...`, `test_tc007_ac007_...`, and `test_tc008_ac008_...` in `tests/integration/test_meal_acceptance.py`; cover future dates, meal boundaries, invalid input, and logging without a target, asserting data is unchanged after rejection.  
   **Covers**: AC-003, AC-006a, AC-006b, AC-007, AC-008  
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k 'tc003 or tc006a or tc006b or tc007 or tc008'` passes.
