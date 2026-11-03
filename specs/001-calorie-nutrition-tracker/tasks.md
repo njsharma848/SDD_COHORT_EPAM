@@ -42,7 +42,7 @@
 
 - [ ] T007 Implement shared service/domain error types in `src/calorie_tracker/service.py` so validation failures, unknown meal IDs, and persistence failures can be reported clearly without leaking tracebacks.  
   **Supports**: P-3, P-4, P-5  
-  **Done when**: `uv run pytest tests/integration/test_repository_schema.py` confirms first-use initialization and no database file is created in the project tree.
+  **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; error-type behavior (clear messages, no traceback leakage, unchanged data on rejection) is verified by T012, T017, and T021's rejection test cases.
 
 ## Phase 3: User Story 1 — Record and Remove Meals (Priority: P1)
 

@@ -10,6 +10,8 @@
 | R-04 | AC-006 | Baseline reconciliation | The working spec combined acceptance of values at the meal maximum with rejection above the maximum, despite the review finding R-01 documenting the approved split into AC-006a and AC-006b. | Restore the two separately testable acceptance criteria from the baseline review. | Review record R-01 |
 | R-05 | plan.md, Processing Sequence A/B, Error Handling table | Plan addition beyond spec | The plan validates malformed date strings (invalid YYYY-MM-DD format), a case not explicitly enumerated in BR-12 or covered by any AC. | Accepted as sensible input-layer robustness; no spec/AC change needed since it falls under FR-013's general "reject invalid input" intent. Will be covered by a test case in the validation plan (Phase 8) without a dedicated AC ID. | Self (Anuj Sharma)  |
 
+| R-06 | tasks.md, T007 | Incorrect completion check | T007's "Done when" check referenced test_repository_schema.py (T004's check) instead of verifying T007's actual deliverable (service/domain error types), making it possible to mark T007 complete without testing it. | Corrected T007's Done-when to defer error-type verification to T012/T017/T021's rejection assertions, matching the pattern already used by T008/T009. | Self (Anuj Sharma) |
+
 ## Cross-check against clarification log
 All of A-01 through A-17 were checked against the spec. Every decision
 and assumption in the clarification log is reflected correctly in the
