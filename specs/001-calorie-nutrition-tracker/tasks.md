@@ -77,7 +77,7 @@
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k 'tc003 or tc006a or tc006b or tc007 or tc008'` passes.
 
-- [ ] T013 [US1] Add deletion tests named `test_tc009_ac009_...` in `tests/integration/test_meal_acceptance.py` for deleting a known ID and rejecting an unknown ID without modifying records.  
+- [x] T013 [US1] Add deletion tests named `test_tc009_ac009_...` in `tests/integration/test_meal_acceptance.py` for deleting a known ID and rejecting an unknown ID without modifying records.  
   **Covers**: AC-009  
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k tc009` passes.

@@ -189,3 +189,41 @@ def test_tc008_ac008_meal_recorded_successfully_with_no_target_set(tmp_path):
         assert meal.id is not None
     finally:
         conn.close()
+
+from calorie_tracker.service import UnknownMealError
+
+
+def test_tc009_ac009_delete_known_meal_removes_it_from_totals(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        meal = service.create_meal(conn, "Oatmeal", "150", "5", today=today)
+
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (1500, 50)
+
+        service.delete_meal(conn, meal.id)
+
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (0, 0)
+    finally:
+        conn.close()
+
+
+def test_tc009_ac009_delete_unknown_id_reports_error_and_leaves_data_unchanged(tmp_path):
+    conn = _conn(tmp_path)
+    try:
+        today = date(2026, 11, 3)
+        meal = service.create_meal(conn, "Oatmeal", "150", "5", today=today)
+
+        try:
+            service.delete_meal(conn, meal.id + 999)
+            assert False, "Expected UnknownMealError for an unknown ID"
+        except UnknownMealError:
+            pass
+
+        # The existing meal must still be present and unchanged.
+        cal, prot = repository.daily_totals(conn, today)
+        assert (cal, prot) == (1500, 50)
+    finally:
+        conn.close()
