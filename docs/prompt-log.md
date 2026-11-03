@@ -150,3 +150,65 @@
 - Decision: Accepted the clarifications and incorporated them into the spec.
 - Reasoning: This resolves the genuinely undecided behavior with direct user
   decisions and keeps the final requirements traceable and testable.
+
+## Entry 5 — Implementation Plan (Phase 4)
+- Step: `/speckit.plan`
+- Tool: GitHub Copilot (Spec Kit)
+- Prompt used (verbatim):
+
+  > Create a technical implementation plan for the Calorie and Nutrition
+  > Tracker, based on the baselined specification (spec v1.0).
+  >
+  > Technology: Python 3.12, standard library only where practical, a
+  > simple CLI (argparse or typer — pick whichever is more idiomatic for
+  > Spec Kit's conventions), SQLite via the built-in sqlite3 module for
+  > storage, and pytest for testing. Favor the simplest design that
+  > satisfies the spec (constitution P-4) — no web framework, no ORM, no
+  > external services.
+  >
+  > The plan must include:
+  > 1. Technology choice and rationale (why this fits a fundamentals-scope
+  >    single-user CLI tool).
+  > 2. Components/modules and their responsibilities (e.g. a data model
+  >    layer, a validation layer, a repository/storage layer, a service
+  >    layer with the business logic, and a CLI layer).
+  > 3. Data model: tables/entities, fields, types, units, and constraints,
+  >    directly reflecting BR-01 through BR-12 in the spec (meals, targets,
+  >    their fields, and validation ranges).
+  > 4. CLI command surface: the commands needed to add a meal, delete a
+  >    meal, set targets, and view progress for a given day.
+  > 5. A processing sequence (numbered steps) for each of these three main
+  >    flows: (a) recording a meal, (b) setting/changing targets, (c)
+  >    viewing progress for a day.
+  > 6. Data handling: how dates and the local day boundary (BR-07) are
+  >    handled, how values are rounded to one decimal place for storage
+  >    and display (BR-03/BR-05), and how the "met" tolerance (BR-11) is
+  >    calculated.
+  > 7. An error-handling table: condition | detection point | user-facing
+  >    response | effect on stored data (should always be "unchanged" per
+  >    constitution P-3) | related AC.
+  > 8. A mapping from each functional requirement (FR-001 through FR-014)
+  >    to the component(s) responsible for satisfying it.
+  > 9. Risks and trade-offs of this approach.
+  >
+  > Do not restate the acceptance criteria — reference them by ID where
+  > relevant. Keep the design as simple as the spec allows; do not add
+  > speculative features, caching, concurrency handling, or configuration
+  > options not required by the spec.
+
+- Clarification prompt: Asked which daily target maximum to use because the
+  working spec.md said 20,000 kcal / 2,000 g while the spec v1.0 review
+  record said 10,000 kcal / 1,000 g.
+- User response: `baseline_10000_1000`.
+- Output received: Created `plan.md`, `research.md`, `data-model.md`,
+  `contracts/cli.md`, and `quickstart.md`. Chose `argparse`, SQLite via
+  `sqlite3`, and integer-tenths storage with `Decimal` validation; mapped
+  FR-001–FR-014 to modules and added flow sequences, error handling, AC test
+  trace, and design risks.
+- Decision: Accepted the baseline selection and plan design. Recorded the
+  discrepancy as R-03/R-04 in `docs/review-record.md`, aligned spec v1.0 to
+  the reviewed 10,000 kcal / 1,000 g target bounds and AC-006a/AC-006b, and
+  marked the spec baseline status.
+- Reasoning: The user's explicit choice prioritizes the reviewed baseline
+  over a later working-copy drift. Aligning the spec before planning keeps
+  the plan, data constraints, and AC references internally consistent.

@@ -1,6 +1,6 @@
 # Feature Specification: Calorie and Nutrition Tracker
 
-**Status**: Draft
+**Status**: Baseline v1.0
 **Source**: User-provided feature decisions A-01 through A-14
 
 ## Users / Actors
@@ -32,7 +32,7 @@
 * **BR-02 — Meal date**: A meal date defaults to today. The user may select any past or present date, but not a future date.
 * **BR-03 — Meal nutrition values**: Calories and protein may be zero. Values are numeric, support up to one decimal place, and are rounded to one decimal place for storage and display. A meal may not exceed 10,000 kcal or 1,000 g protein.
 * **BR-04 — Meal deletion**: A meal may be deleted by its ID. If the ID does not identify a recorded meal, the system reports a clear error and leaves data unchanged. Editing is not supported; a correction requires deleting and re-adding the meal.
-* **BR-05 — Daily targets**: The user sets or changes daily calorie and protein targets together. A target does not have to exist before meals can be logged. Each target is numeric, has no more than one decimal place, is rounded to one decimal place for storage and display, and must be between zero and a daily maximum of 20,000 kcal or 2,000 g protein. These daily maximums are independent of, and intentionally larger than, the per-meal maximums in BR-03.
+* **BR-05 — Daily targets**: The user sets or changes daily calorie and protein targets together. A target does not have to exist before meals can be logged. Each target is numeric, has no more than one decimal place, is rounded to one decimal place for storage and display, and must be between zero and 10,000 kcal or 1,000 g protein.
 * **BR-06 — Target history**: A changed target applies starting on the day it is changed. Past days retain the target that was active on those days.
 * **BR-07 — Day boundary**: A day is the period from midnight to midnight in local system time.
 * **BR-08 — Daily totals**: Daily consumed totals are the sum of meal calories and protein for the selected day only. With no meals for that day, both totals are zero.
@@ -48,7 +48,7 @@
 * **FR-003**: The system MUST accept zero for meal calories and protein, accept values to one decimal place, and store and display them rounded to one decimal place.
 * **FR-004**: The system MUST reject a meal with calories above 10,000 kcal or protein above 1,000 g.
 * **FR-005**: The system MUST let the user delete a meal by its ID, report a clear error without changing data if the ID is unknown, and MUST NOT provide meal editing.
-* **FR-006**: The system MUST let the user set or change daily calorie and protein targets together, each from zero through 20,000 kcal or 2,000 g protein respectively and to no more than one decimal place, round them to one decimal place for storage and display, and MUST allow meal logging when no target is set.
+* **FR-006**: The system MUST let the user set or change daily calorie and protein targets together, each from zero through 10,000 kcal or 1,000 g protein respectively and to no more than one decimal place, round them to one decimal place for storage and display, and MUST allow meal logging when no target is set.
 * **FR-007**: The system MUST apply a changed target from its effective day forward while preserving the target applicable to each past day.
 * **FR-008**: The system MUST show, for one selected day, total calories and protein consumed and, if a target exists, that day's targets, remaining amounts, and status labels.
 * **FR-009**: The system MUST show zero consumed totals when a day has no meals.
@@ -83,8 +83,10 @@
 **Given** the user supplies valid calorie and protein values with no more than one decimal place, **When** the meal is recorded and viewed in daily totals, **Then** those values are stored and displayed rounded to one decimal place.
 * **AC-005 — Accept zero meal values**  
 **Given** the user supplies zero for calories, protein, or both, **When** the meal is recorded, **Then** the system accepts the values.
-* **AC-006 — Enforce meal maximums**  
-**Given** a meal has 10,000 kcal and 1,000 g protein, **When** it is recorded, **Then** the system accepts it. **Given** either value exceeds its maximum, **When** the user attempts to record it, **Then** the system rejects it with a clear error and leaves existing data unchanged.
+* **AC-006a — Accept meal values at the maximums**  
+**Given** a meal has 10,000 kcal and 1,000 g protein, **When** it is recorded, **Then** the system accepts it.
+* **AC-006b — Reject meal values above the maximums**  
+**Given** either meal value exceeds its maximum, **When** the user attempts to record the meal, **Then** the system rejects it with a clear error and leaves existing data unchanged.
 * **AC-007 — Reject missing, non-numeric, or negative meal input**  
 **Given** a required meal field is missing, a calorie or protein value is non-numeric or negative, or a meal value has more than one decimal place, **When** the user attempts to record the meal, **Then** the system gives a clear error and existing data remains unchanged.
 * **AC-008 — Record a meal without a target**  
@@ -92,9 +94,9 @@
 * **AC-009 — Delete a meal by ID**  
 **Given** a recorded meal with an ID, **When** the user deletes that meal by ID, **Then** it is removed and no longer contributes to that day's consumed totals. **Given** an ID that does not identify a recorded meal, **When** the user attempts deletion, **Then** the system reports a clear error and leaves existing data unchanged.
 * **AC-010 — Set calorie and protein targets together**  
-**Given** the user supplies both targets with values from zero through 20,000 kcal and zero through 2,000 g protein, each to no more than one decimal place, **When** the user sets or changes the targets, **Then** both are accepted, rounded to one decimal place for storage and display, and available for progress on their effective day.
+**Given** the user supplies both targets with values from zero through 10,000 kcal and zero through 1,000 g protein, each to no more than one decimal place, **When** the user sets or changes the targets, **Then** both are accepted, rounded to one decimal place for storage and display, and available for progress on their effective day.
 * **AC-011 — Reject invalid targets safely**  
-**Given** either required target is missing, non-numeric, below zero, above its maximum, or has more than one decimal place, **When** the user attempts to set or change targets, **Then** the system gives a clear error and leaves the existing target and other data unchanged.
+**Given** either required target is missing, non-numeric, below zero, above 10,000 kcal or 1,000 g protein, or has more than one decimal place, **When** the user attempts to set or change targets, **Then** the system gives a clear error and leaves the existing target and other data unchanged.
 * **AC-012 — Preserve past targets after a change**  
 **Given** a target was active on a past day and is later changed, **When** the user views progress for the past day and for the change day, **Then** the past day retains its previously active target and the changed target applies from the change day forward.
 * **AC-013 — Calculate totals for only the selected day**  
@@ -115,4 +117,3 @@
 **Given** existing meals or targets are present, **When** any invalid input covered by BR-12 is submitted, **Then** the system reports an error and all existing meals, targets, and totals remain unchanged.
 * **AC-021 — Use the tracker without an account**  
 **Given** the single user starts the tracker, **When** they access its meal, target, or progress functions through the command-line interface, **Then** they can use them without creating an account or authenticating.
-
