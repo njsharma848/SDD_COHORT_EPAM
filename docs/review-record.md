@@ -4,11 +4,11 @@
 
 | R-ID | Location | Issue type | Finding | Correction | Verified by |
 |------|----------|-----------|---------|------------|-------------|
-| R-01 | AC-006 | Untestable (mixed) | AC-006 combined a positive case (meal exactly at max, accepted) and a negative case (meal over max, rejected) in a single Given/When/Then, which doesn't map cleanly to one automated test. | Split into AC-006a (accept at boundary) and AC-006b (reject above maximum). | Self (Sanath) |
-| R-02 | BR-05 / FR-006 / AC-010 | Reviewed, confirmed (not a defect) | Daily target upper bound (10,000 kcal / 1,000 g) equals the per-meal maximum. Initially flagged as a possible unreviewed AI default, but verified against prompt-log Entry 4: this was a deliberate answer (`targetLimits=same_as_meals`) to Spec Kit's own clarification follow-up, not a silent invention. | None — confirmed as an intentional decision; logged as A-15 in the clarification log. | Self (Sanath) |
+| R-01 | AC-006 | Untestable (mixed) | AC-006 combined a positive case (meal exactly at max, accepted) and a negative case (meal over max, rejected) in a single Given/When/Then, which doesn't map cleanly to one automated test. | Split into AC-006a (accept at boundary) and AC-006b (reject above maximum). | Self (Anuj Sharma)|
+| R-02 | BR-05 / FR-006 / AC-010 | Reviewed, confirmed (not a defect) | Daily target upper bound (10,000 kcal / 1,000 g) equals the per-meal maximum. Initially flagged as a possible unreviewed AI default, but verified against prompt-log Entry 4: this was a deliberate answer (`targetLimits=same_as_meals`) to Spec Kit's own clarification follow-up, not a silent invention. | None — confirmed as an intentional decision; logged as A-15 in the clarification log. | Self (Anuj Sharma) |
 | R-03 | BR-05 / FR-006 / AC-010 | Baseline reconciliation | The working spec had diverged from the reviewed v1.0 baseline, showing daily target maximums of 20,000 kcal / 2,000 g, although the baseline record and the user's planning clarification confirm 10,000 kcal / 1,000 g. | Restore the reviewed v1.0 bounds in the specification before planning. | User decision in this planning session |
 | R-04 | AC-006 | Baseline reconciliation | The working spec combined acceptance of values at the meal maximum with rejection above the maximum, despite the review finding R-01 documenting the approved split into AC-006a and AC-006b. | Restore the two separately testable acceptance criteria from the baseline review. | Review record R-01 |
-| R-05 | plan.md, Processing Sequence A/B, Error Handling table | Plan addition beyond spec | The plan validates malformed date strings (invalid YYYY-MM-DD format), a case not explicitly enumerated in BR-12 or covered by any AC. | Accepted as sensible input-layer robustness; no spec/AC change needed since it falls under FR-013's general "reject invalid input" intent. Will be covered by a test case in the validation plan (Phase 8) without a dedicated AC ID. | Self (Sanath) |
+| R-05 | plan.md, Processing Sequence A/B, Error Handling table | Plan addition beyond spec | The plan validates malformed date strings (invalid YYYY-MM-DD format), a case not explicitly enumerated in BR-12 or covered by any AC. | Accepted as sensible input-layer robustness; no spec/AC change needed since it falls under FR-013's general "reject invalid input" intent. Will be covered by a test case in the validation plan (Phase 8) without a dedicated AC ID. | Self (Anuj Sharma)  |
 
 ## Cross-check against clarification log
 All of A-01 through A-17 were checked against the spec. Every decision
@@ -32,5 +32,5 @@ issues surfaced that the manual review above did not already cover.
 - Changes made at review: AC-006 split into AC-006a/AC-006b (R-01)
 - **Baseline approved for planning: spec v1.0**
 - Date: 2026-11-03
-- Approved by: Sanath (self-review, assignment permits self-verification
+- Approved by: Anuj Sharma(self-review, assignment permits self-verification
   with mentor as available escalation point)
