@@ -14,7 +14,7 @@
   **Supports**: P-4, P-6  
   **Done when**: All listed directories exist and `src/calorie_tracker/__init__.py` imports under Python 3.12.
 
-- [ ] T002 Add the minimal Python project and pytest configuration in `pyproject.toml`, declaring Python 3.12 and pytest as a test-only dependency with no runtime dependencies.  
+- [x] T002 Add the minimal Python project and pytest configuration in `pyproject.toml`, declaring Python 3.12 and pytest as a test-only dependency with no runtime dependencies.  
   **Supports**: P-4, P-6  
   **Done when**: `uv run pytest --version` succeeds and the project metadata declares no runtime dependencies.
 
@@ -22,11 +22,11 @@
 
 **Purpose**: Establish the shared domain and SQLite foundations before implementing user flows.
 
-- [ ] T003 Define typed Meal, Target, and DailyProgress value models in `src/calorie_tracker/models.py`, using integer tenths and local ISO dates as specified in `data-model.md`; add focused model tests in `tests/unit/test_models.py`.  
+- [x] T003 Define typed Meal, Target, and DailyProgress value models in `src/calorie_tracker/models.py`, using integer tenths and local ISO dates as specified in `data-model.md`; add focused model tests in `tests/unit/test_models.py`.  
   **Covers**: AC-001, AC-004, AC-010, AC-013, AC-015  
   **Done when**: `uv run pytest tests/unit/test_models.py` passes model construction and type/value checks.
 
-- [ ] T004 Implement SQLite initialization and the meals/target-history tables in `src/calorie_tracker/repository.py`, including primary keys and range checks for 0–100,000 calorie tenths and 0–10,000 protein tenths; add schema tests in `tests/integration/test_repository_schema.py`. Store the database under the user's home directory, not in the repository.  
+- [x] T004 Implement SQLite initialization and the meals/target-history tables in `src/calorie_tracker/repository.py`, including primary keys and range checks for 0–100,000 calorie tenths and 0–10,000 protein tenths; add schema tests in `tests/integration/test_repository_schema.py`. Store the database under the user's home directory, not in the repository.  
   **Covers**: AC-001, AC-006a, AC-010, AC-012  
   **Supports**: P-5  
   **Done when**: `uv run pytest tests/integration/test_repository_schema.py` verifies schema creation, constraints, and the resolved database path is outside the repository.
