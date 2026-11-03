@@ -10,7 +10,7 @@
 
 **Purpose**: Establish only the Python package and test environment required by the plan.
 
-- [ ] T001 [P] Create `src/calorie_tracker/`, `tests/unit/`, `tests/integration/`, `tests/cli/`, and `screenshots/` with package initializers where needed; keep the implementation a single standard-library CLI package.  
+- [x] T001 [P] Create `src/calorie_tracker/`, `tests/unit/`, `tests/integration/`, `tests/cli/`, and `screenshots/` with package initializers where needed; keep the implementation a single standard-library CLI package.  
   **Supports**: P-4, P-6  
   **Done when**: All listed directories exist and `src/calorie_tracker/__init__.py` imports under Python 3.12.
 
