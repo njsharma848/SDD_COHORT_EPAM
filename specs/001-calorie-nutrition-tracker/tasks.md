@@ -31,7 +31,7 @@
   **Supports**: P-5  
   **Done when**: `uv run pytest tests/integration/test_repository_schema.py` verifies schema creation, constraints, and the resolved database path is outside the repository.
 
-- [ ] T005 Implement parameterized SQLite meal insert/delete, daily aggregate, and effective-target lookup operations in `src/calorie_tracker/repository.py`; add repository tests in `tests/integration/test_repository.py`. Each mutation must use a transaction and roll back on failure.  
+- [x] T005 Implement parameterized SQLite meal insert/delete, daily aggregate, and effective-target lookup operations in `src/calorie_tracker/repository.py`; add repository tests in `tests/integration/test_repository.py`. Each mutation must use a transaction and roll back on failure.  
   **Covers**: AC-009, AC-012, AC-013, AC-014, AC-020  
   **Done when**: `uv run pytest tests/integration/test_repository.py` passes insert, delete, date-filter, target-history, and rollback checks.
 
