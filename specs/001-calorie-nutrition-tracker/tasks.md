@@ -52,7 +52,7 @@
 
 ### Implementation
 
-- [ ] T008 [US1] Implement meal creation in `src/calorie_tracker/service.py`: validate all fields before persistence, default the date to local today, convert valid one-decimal amounts to integer tenths, and return the new ID.  
+- [x] T008 [US1] Implement meal creation in `src/calorie_tracker/service.py`: validate all fields before persistence, default the date to local today, convert valid one-decimal amounts to integer tenths, and return the new ID.  
   **Covers**: AC-001, AC-002, AC-003, AC-004, AC-005, AC-006a, AC-006b, AC-007, AC-008  
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; acceptance behavior is verified in T011–T012.

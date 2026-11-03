@@ -13,7 +13,11 @@ from __future__ import annotations
 import sqlite3
 
 from .validation import ValidationError  # re-exported for convenience
+from datetime import date as _date
 
+from . import repository
+from .models import Meal
+from .validation import validate_calories, validate_meal_date, validate_name, validate_protein
 
 class DomainError(Exception):
     """Base class for all expected, user-facing errors raised by the
@@ -51,3 +55,36 @@ def run_safely(operation: str, fn, *args, **kwargs):
         return fn(*args, **kwargs)
     except sqlite3.Error as exc:
         raise PersistenceError(operation, exc) from exc
+
+def create_meal(conn, name, calories_raw, protein_raw, date_raw=None, today=None) -> Meal:
+    """Validate and record a new meal. Returns the persisted Meal
+    (with its assigned id).
+
+    Raises ValidationError for any invalid field (AC-003, AC-006b,
+    AC-007) or PersistenceError on storage failure. Validation runs
+    entirely before the repository call, so no partial write ever
+    occurs (AC-020).
+
+    `today` is injectable for testing; defaults to the real local date.
+    """
+    if today is None:
+        today = _date.today()
+
+    validated_name = validate_name(name)
+    calories_tenths = validate_calories(calories_raw)
+    protein_tenths = validate_protein(protein_raw)
+    meal_date = validate_meal_date(date_raw, today)
+
+    meal_id = run_safely(
+        "record meal",
+        repository.insert_meal,
+        conn, validated_name, calories_tenths, protein_tenths, meal_date,
+    )
+
+    return Meal(
+        id=meal_id,
+        name=validated_name,
+        calories_tenths=calories_tenths,
+        protein_tenths=protein_tenths,
+        meal_date=meal_date,
+    )
