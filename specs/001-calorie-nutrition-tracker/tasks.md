@@ -57,7 +57,7 @@
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; acceptance behavior is verified in T011–T012.
 
-- [ ] T009 [US1] Implement meal deletion in `src/calorie_tracker/service.py`, raising a clear domain error when the repository finds no matching ID.  
+- [x] T009 [US1] Implement meal deletion in `src/calorie_tracker/service.py`, raising a clear domain error when the repository finds no matching ID.  
   **Covers**: AC-009  
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; deletion behavior is verified in T013–T014.

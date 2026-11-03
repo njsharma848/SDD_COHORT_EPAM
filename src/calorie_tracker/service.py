@@ -88,3 +88,14 @@ def create_meal(conn, name, calories_raw, protein_raw, date_raw=None, today=None
         protein_tenths=protein_tenths,
         meal_date=meal_date,
     )
+
+def delete_meal(conn, meal_id: int) -> None:
+    """Delete a meal by ID.
+
+    Raises UnknownMealError if no meal with that ID exists (AC-009).
+    On failure, no data is changed — repository.delete_meal only
+    deletes a row if one actually matches.
+    """
+    deleted = run_safely("delete meal", repository.delete_meal, conn, meal_id)
+    if not deleted:
+        raise UnknownMealError(meal_id)
