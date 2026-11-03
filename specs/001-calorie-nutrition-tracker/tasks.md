@@ -68,7 +68,7 @@
 
 ### Automated Acceptance Tests
 
-- [ ] T011 [US1] Add acceptance tests named `test_tc001_ac001_...`, `test_tc002_ac002_...`, `test_tc004_ac004_...`, and `test_tc005_ac005_...` in `tests/integration/test_meal_acceptance.py` for today's default, valid past/today dates, precision, and zero inputs.  
+- [x] T011 [US1] Add acceptance tests named `test_tc001_ac001_...`, `test_tc002_ac002_...`, `test_tc004_ac004_...`, and `test_tc005_ac005_...` in `tests/integration/test_meal_acceptance.py` for today's default, valid past/today dates, precision, and zero inputs.  
   **Covers**: AC-001, AC-002, AC-004, AC-005  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k 'tc001 or tc002 or tc004 or tc005'` passes.
 
