@@ -82,7 +82,7 @@
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_meal_acceptance.py -k tc009` passes.
 
-- [ ] T014 [US1] Add CLI tests named `test_tc001_ac001_cli_...`, `test_tc009_ac009_cli_...`, and `test_tc021_ac021_...` in `tests/cli/test_meal_commands.py` for add, delete, and use without login/account setup.  
+- [x] T014 [US1] Add CLI tests named `test_tc001_ac001_cli_...`, `test_tc009_ac009_cli_...`, and `test_tc021_ac021_...` in `tests/cli/test_meal_commands.py` for add, delete, and use without login/account setup.  
   **Covers**: AC-001, AC-009, AC-021  
   **Done when**: `uv run pytest tests/cli/test_meal_commands.py` passes with no account or authentication setup.
 
