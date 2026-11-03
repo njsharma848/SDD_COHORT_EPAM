@@ -40,7 +40,7 @@
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/unit/test_validation.py` passes the field-level valid, boundary, and invalid input cases.
 
-- [ ] T007 Implement shared service/domain error types in `src/calorie_tracker/service.py` so validation failures, unknown meal IDs, and persistence failures can be reported clearly without leaking tracebacks.  
+- [x] T007 Implement shared service/domain error types in `src/calorie_tracker/service.py` so validation failures, unknown meal IDs, and persistence failures can be reported clearly without leaking tracebacks.  
   **Supports**: P-3, P-4, P-5  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; error-type behavior (clear messages, no traceback leakage, unchanged data on rejection) is verified by T012, T017, and T021's rejection test cases.
 
