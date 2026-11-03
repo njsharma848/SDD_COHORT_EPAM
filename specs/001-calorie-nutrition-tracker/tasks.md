@@ -62,7 +62,7 @@
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; deletion behavior is verified in T013–T014.
 
-- [ ] T010 [US1] Add the `add-meal` and `delete-meal` argparse commands, required flags, optional `--date`, success messages including the assigned meal ID, and clear non-zero error responses in `src/calorie_tracker/cli.py` and `src/calorie_tracker/__main__.py`.  
+- [x] T010 [US1] Add the `add-meal` and `delete-meal` argparse commands, required flags, optional `--date`, success messages including the assigned meal ID, and clear non-zero error responses in `src/calorie_tracker/cli.py` and `src/calorie_tracker/__main__.py`.  
   **Covers**: AC-001, AC-002, AC-003, AC-004, AC-005, AC-006a, AC-006b, AC-007, AC-008, AC-009, AC-021  
   **Done when**: `uv run python -m calorie_tracker --help` lists both commands and `uv run pytest tests/cli/test_meal_commands.py` passes.
 
