@@ -35,7 +35,7 @@
   **Covers**: AC-009, AC-012, AC-013, AC-014, AC-020  
   **Done when**: `uv run pytest tests/integration/test_repository.py` passes insert, delete, date-filter, target-history, and rollback checks.
 
-- [ ] T006 Implement typed validation errors and reusable numeric/date validation in `src/calorie_tracker/validation.py`; add field-level unit tests in `tests/unit/test_validation.py`. Use `Decimal`; reject missing/non-numeric, negative, more-than-one-decimal-place, above-maximum values (meal/target limits: 10,000 kcal and 1,000 g protein), invalid dates, and future meal dates before any write.  
+- [x] T006 Implement typed validation errors and reusable numeric/date validation in `src/calorie_tracker/validation.py`; add field-level unit tests in `tests/unit/test_validation.py`. Use `Decimal`; reject missing/non-numeric, negative, more-than-one-decimal-place, above-maximum values (meal/target limits: 10,000 kcal and 1,000 g protein), invalid dates, and future meal dates before any write.  
   **Covers**: AC-003, AC-006b, AC-007, AC-011, AC-020  
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/unit/test_validation.py` passes the field-level valid, boundary, and invalid input cases.
