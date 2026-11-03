@@ -151,64 +151,71 @@
 - Reasoning: This resolves the genuinely undecided behavior with direct user
   decisions and keeps the final requirements traceable and testable.
 
-## Entry 5 — Implementation Plan (Phase 4)
-- Step: `/speckit.plan`
+## Entry 5 — Implementation Plan (Phase 6)
+- Step: Phase 6 (Plan)
+- Tool: GitHub Copilot (Spec Kit /speckit.plan)
+- Prompt: requested a technical plan from spec v1.0 — Python 3.12,
+  argparse, SQLite via sqlite3, pytest; simplest design satisfying the
+  spec; components, data model, CLI commands, processing sequences,
+  decimal/date handling, error-handling table, FR-to-component
+  mapping, and risks.
+- Mid-generation issue: the plan step detected that spec.md had
+  drifted from the documented v1.0 baseline (target limit showed
+  20,000/2,000 kcal/g instead of the reviewed 10,000/1,000, and AC-006
+  had reverted to its unsplit form). Answered Copilot's clarification
+  question by instructing it to use the reviewed baseline
+  (10,000/1,000), then manually reconciled spec.md and
+  docs/review-record.md (R-03, R-04) before planning continued.
+- Key output: plan.md, research.md, data-model.md, contracts/cli.md,
+  quickstart.md created under specs/001-calorie-nutrition-tracker/.
+- My review: verified all 14 FRs map to a component, all 22 ACs
+  (AC-001..AC-021, with AC-006 split) are covered by the Test
+  Coverage Outline, the target-history data model correctly satisfies
+  BR-06, and the error-handling table covers every BR-12 case. Found
+  one plan addition beyond the spec's literal scope: malformed-date
+  validation, not explicitly required by any BR/AC. Logged as R-05 in
+  docs/review-record.md; accepted as reasonable input-layer robustness
+  rather than a spec gap requiring a new AC.
+- Decision: accepted the plan's architecture, data model, and error
+  handling as-is after review; no further changes needed.
+- Screenshot: screenshots/speckit-plan-chat.png,
+  screenshots/specs-folder-listing.png
+
+  
+## Entry 6 — Implementation Tasks
+- Step: `/speckit.tasks`
 - Tool: GitHub Copilot (Spec Kit)
 - Prompt used (verbatim):
 
-  > Create a technical implementation plan for the Calorie and Nutrition
-  > Tracker, based on the baselined specification (spec v1.0).
+  > Generate the implementation task breakdown from plan.md for the Calorie
+  > and Nutrition Tracker.
   >
-  > Technology: Python 3.12, standard library only where practical, a
-  > simple CLI (argparse or typer — pick whichever is more idiomatic for
-  > Spec Kit's conventions), SQLite via the built-in sqlite3 module for
-  > storage, and pytest for testing. Favor the simplest design that
-  > satisfies the spec (constitution P-4) — no web framework, no ORM, no
-  > external services.
+  > Requirements for the tasks:
+  > 1. Each task must be small (roughly 30–90 minutes of work) and
+  >    sequenced in a sensible build order: project setup, models, repository/
+  >    persistence, validation, service layer, CLI commands, then tests,
+  >    README, and evidence tasks.
+  > 2. Every task must state which acceptance criterion/criteria it covers
+  >    ("Covers: AC-###") or which constitution principle it supports
+  >    ("Supports: P-#"), so every task traces to something.
+  > 3. Every task must include a concrete "Done when" check.
+  > 4. Explicitly include non-code tasks: writing tests for each acceptance
+  >    criterion, writing the README, building the traceability matrix, and
+  >    capturing evidence (test run output, CLI demo screenshots).
+  > 5. Do not include any task not justified by plan.md or spec.md.
   >
-  > The plan must include:
-  > 1. Technology choice and rationale (why this fits a fundamentals-scope
-  >    single-user CLI tool).
-  > 2. Components/modules and their responsibilities (e.g. a data model
-  >    layer, a validation layer, a repository/storage layer, a service
-  >    layer with the business logic, and a CLI layer).
-  > 3. Data model: tables/entities, fields, types, units, and constraints,
-  >    directly reflecting BR-01 through BR-12 in the spec (meals, targets,
-  >    their fields, and validation ranges).
-  > 4. CLI command surface: the commands needed to add a meal, delete a
-  >    meal, set targets, and view progress for a given day.
-  > 5. A processing sequence (numbered steps) for each of these three main
-  >    flows: (a) recording a meal, (b) setting/changing targets, (c)
-  >    viewing progress for a day.
-  > 6. Data handling: how dates and the local day boundary (BR-07) are
-  >    handled, how values are rounded to one decimal place for storage
-  >    and display (BR-03/BR-05), and how the "met" tolerance (BR-11) is
-  >    calculated.
-  > 7. An error-handling table: condition | detection point | user-facing
-  >    response | effect on stored data (should always be "unchanged" per
-  >    constitution P-3) | related AC.
-  > 8. A mapping from each functional requirement (FR-001 through FR-014)
-  >    to the component(s) responsible for satisfying it.
-  > 9. Risks and trade-offs of this approach.
-  >
-  > Do not restate the acceptance criteria — reference them by ID where
-  > relevant. Keep the design as simple as the spec allows; do not add
-  > speculative features, caching, concurrency handling, or configuration
-  > options not required by the spec.
+  > After generating the tasks, check every one of the 22 acceptance
+  > criteria (AC-001 through AC-021, with AC-006 split into AC-006a/AC-006b)
+  > is covered, and verify no task lacks AC/principle traceability.
 
-- Clarification prompt: Asked which daily target maximum to use because the
-  working spec.md said 20,000 kcal / 2,000 g while the spec v1.0 review
-  record said 10,000 kcal / 1,000 g.
-- User response: `baseline_10000_1000`.
-- Output received: Created `plan.md`, `research.md`, `data-model.md`,
-  `contracts/cli.md`, and `quickstart.md`. Chose `argparse`, SQLite via
-  `sqlite3`, and integer-tenths storage with `Decimal` validation; mapped
-  FR-001–FR-014 to modules and added flow sequences, error handling, AC test
-  trace, and design risks.
-- Decision: Accepted the baseline selection and plan design. Recorded the
-  discrepancy as R-03/R-04 in `docs/review-record.md`, aligned spec v1.0 to
-  the reviewed 10,000 kcal / 1,000 g target bounds and AC-006a/AC-006b, and
-  marked the spec baseline status.
-- Reasoning: The user's explicit choice prioritizes the reviewed baseline
-  over a later working-copy drift. Aligning the spec before planning keeps
-  the plan, data constraints, and AC references internally consistent.
+- Output received: Created `specs/001-calorie-nutrition-tracker/tasks.md`
+  with 26 ordered tasks across setup, foundation, three user journeys, and
+  cross-cutting validation/documentation/evidence. Included concrete done
+  checks, AC/P traceability, test naming convention, full AC coverage matrix,
+  dependencies, parallel opportunities, and MVP guidance.
+- Decision: Accepted the breakdown, with user-journey groupings inferred
+  from the spec's meal, target, and progress flows because the spec itself
+  does not name user stories.
+- Reasoning: The task plan stays within plan/spec scope, traces all 22
+  acceptance criteria, and includes the required tests, README, traceability,
+  validation-plan, and evidence deliverables.
