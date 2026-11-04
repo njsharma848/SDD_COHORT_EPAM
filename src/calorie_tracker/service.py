@@ -16,8 +16,8 @@ from .validation import ValidationError  # re-exported for convenience
 from datetime import date as _date
 
 from . import repository
-from .models import Meal,Target
-from .validation import validate_calories, validate_meal_date, validate_name, validate_protein
+from .models import DailyProgress, Meal, Target
+from .validation import parse_date, validate_calories, validate_meal_date, validate_name, validate_protein
 
 class DomainError(Exception):
     """Base class for all expected, user-facing errors raised by the
@@ -127,4 +127,66 @@ def set_targets(conn, calories_raw, protein_raw, today=None) -> Target:
         effective_date=today,
         calories_tenths=calories_tenths,
         protein_tenths=protein_tenths,
+    )
+CALORIE_TOLERANCE_TENTHS = 50  # 5.0 kcal
+PROTEIN_TOLERANCE_TENTHS = 10  # 1.0 g
+
+
+def _status_for(difference_tenths: int, tolerance_tenths: int) -> str:
+    """BR-11: 'met' includes the boundary on both sides."""
+    if abs(difference_tenths) <= tolerance_tenths:
+        return "met"
+    if difference_tenths < -tolerance_tenths:
+        return "under"
+    return "over"
+
+
+def get_progress(conn, date_raw=None, today=None) -> DailyProgress:
+    """Compute the progress view for one selected day.
+
+    Aggregates only meals dated exactly on the selected day (AC-013),
+    defaults to local today when omitted, looks up the latest
+    effective target on or before that day, and — when a target
+    exists — calculates signed remaining amounts and an
+    under/met/over status per nutrient using BR-11's tolerances.
+    When no target applies, remaining/status are None (BR-09/AC-019).
+    """
+    if today is None:
+        today = _date.today()
+
+    selected_date = parse_date(date_raw, today)
+
+    consumed_cal, consumed_prot = run_safely(
+        "view progress", repository.daily_totals, conn, selected_date
+    )
+    target = run_safely(
+        "view progress", repository.latest_target_for_date, conn, selected_date
+    )
+
+    if target is None:
+        return DailyProgress(
+            selected_date=selected_date,
+            consumed_calories_tenths=consumed_cal,
+            consumed_protein_tenths=consumed_prot,
+            target=None,
+            remaining_calories_tenths=None,
+            remaining_protein_tenths=None,
+            calories_status=None,
+            protein_status=None,
+        )
+
+    remaining_cal = target.calories_tenths - consumed_cal
+    remaining_prot = target.protein_tenths - consumed_prot
+    cal_diff = consumed_cal - target.calories_tenths
+    prot_diff = consumed_prot - target.protein_tenths
+
+    return DailyProgress(
+        selected_date=selected_date,
+        consumed_calories_tenths=consumed_cal,
+        consumed_protein_tenths=consumed_prot,
+        target=target,
+        remaining_calories_tenths=remaining_cal,
+        remaining_protein_tenths=remaining_prot,
+        calories_status=_status_for(cal_diff, CALORIE_TOLERANCE_TENTHS),
+        protein_status=_status_for(prot_diff, PROTEIN_TOLERANCE_TENTHS),
     )

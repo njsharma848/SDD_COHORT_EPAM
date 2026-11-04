@@ -49,6 +49,10 @@ def test_tc_model_daily_progress_without_target_reports_no_target():
         consumed_calories_tenths=0,
         consumed_protein_tenths=0,
         target=None,
+        remaining_calories_tenths=None,
+        remaining_protein_tenths=None,
+        calories_status=None,
+        protein_status=None,
     )
     assert progress.has_target is False
 
@@ -60,6 +64,10 @@ def test_tc_model_daily_progress_with_target_reports_has_target():
         consumed_calories_tenths=1500,
         consumed_protein_tenths=50,
         target=target,
+        remaining_calories_tenths=18500,
+        remaining_protein_tenths=1450,
+        calories_status="under",
+        protein_status="under",
     )
     assert progress.has_target is True
     assert progress.target.calories_tenths == 20000

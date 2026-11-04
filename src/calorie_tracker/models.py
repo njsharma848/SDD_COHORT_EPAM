@@ -38,12 +38,20 @@ class Target:
 
 @dataclass(frozen=True)
 class DailyProgress:
-    """The computed progress view for one selected day (BR-08..BR-11)."""
+    """The computed progress view for one selected day (BR-08..BR-11).
+
+    remaining_*/*_status are None whenever target is None (BR-09) —
+    they are always set together by the service layer, never partially.
+    """
 
     selected_date: date
     consumed_calories_tenths: int
     consumed_protein_tenths: int
     target: Target | None  # None means "no target set" (BR-09)
+    remaining_calories_tenths: int | None
+    remaining_protein_tenths: int | None
+    calories_status: str | None  # "under" | "met" | "over" | None
+    protein_status: str | None   # "under" | "met" | "over" | None
 
     @property
     def has_target(self) -> bool:

@@ -118,7 +118,7 @@
 
 ### Implementation
 
-- [x] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
+- [ ] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
   **Covers**: AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; acceptance behavior is verified in T020.
 
