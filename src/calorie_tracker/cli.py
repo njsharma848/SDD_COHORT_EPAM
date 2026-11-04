@@ -37,6 +37,9 @@ def build_parser() -> argparse.ArgumentParser:
     set_targets.add_argument("--calories", required=True)
     set_targets.add_argument("--protein", required=True)
 
+    progress_parser = subparsers.add_parser("progress", help="View progress for a day")
+    progress_parser.add_argument("--date", default=None, help="YYYY-MM-DD (defaults to today)")
+
     return parser
 
 
@@ -91,9 +94,36 @@ def run(argv: list[str] | None = None, db_path=None) -> int:
             )
             return 0
 
+        if args.command == "progress":
+            try:
+                result = service.get_progress(conn, date_raw=args.date)
+            except (ValidationError, service.DomainError) as exc:
+                _print_error(str(exc))
+                return 1
+
+            if result.target is None:
+                print(f"Progress for {result.selected_date}: no target set")
+                print(
+                    f"  Consumed: {result.consumed_calories_tenths / 10:.1f} kcal, "
+                    f"{result.consumed_protein_tenths / 10:.1f} g protein"
+                )
+            else:
+                print(f"Progress for {result.selected_date}:")
+                print(
+                    f"  Calories: {result.consumed_calories_tenths / 10:.1f} / "
+                    f"{result.target.calories_tenths / 10:.1f} kcal "
+                    f"({result.calories_status}, remaining "
+                    f"{result.remaining_calories_tenths / 10:.1f})"
+                )
+                print(
+                    f"  Protein:  {result.consumed_protein_tenths / 10:.1f} / "
+                    f"{result.target.protein_tenths / 10:.1f} g "
+                    f"({result.protein_status}, remaining "
+                    f"{result.remaining_protein_tenths / 10:.1f})"
+                )
+            return 0
+
         _print_error(f"Unknown command: {args.command}")
         return 1
-
-        
     finally:
         conn.close()
