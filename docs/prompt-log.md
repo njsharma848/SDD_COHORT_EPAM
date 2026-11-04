@@ -219,7 +219,7 @@
 - Reasoning: The task plan stays within plan/spec scope, traces all 22
   acceptance criteria, and includes the required tests, README, traceability,
   validation-plan, and evidence deliverables.
-  
+
 ## Entry 6 — Tasks (Phase 7)
 - Step: Phase 7 (Tasks)
 - Tool: GitHub Copilot (Spec Kit /speckit.tasks)
@@ -238,3 +238,16 @@
 - Decision: accepted the task structure, sequencing, and coverage as-is
   after fixing T007.
 - Screenshot: screenshots/speckit-tasks.png
+
+## Entry 7 — T016 bug (Phase 7 execution)
+- Step: T016 (set-targets CLI command)
+- Issue: run() was missing the set-targets handler; the command fell
+  through to the generic "Unknown command" error. Two tests passed
+  despite this because both expected a non-zero exit code, which the
+  unknown-command path also produces — a false-positive test result.
+- Fix: added the missing if-branch for set-targets. Verified the
+  fix by confirming the success-path test (which requires real
+  success) now passes, and checking stderr no longer shows "Unknown
+  command" in any test.
+- Lesson applied: a test asserting only "exit code != 0" can pass for
+  the wrong reason; logged as R-07 in docs/review-record.md.

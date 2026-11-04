@@ -12,6 +12,7 @@
 
 | R-06 | tasks.md, T007 | Incorrect completion check | T007's "Done when" check referenced test_repository_schema.py (T004's check) instead of verifying T007's actual deliverable (service/domain error types), making it possible to mark T007 complete without testing it. | Corrected T007's Done-when to defer error-type verification to T012/T017/T021's rejection assertions, matching the pattern already used by T008/T009. | Self (Anuj Sharma) |
 
+| R-07 | cli.py, run() | Missing command handler (false-positive tests) | The set-targets CLI handler was not added to run()'s if/elif chain, so set-targets silently fell through to the "Unknown command" error path. Two of the four T016 tests (invalid-value and above-maximum) initially passed anyway, because an "unknown command" error also returns a non-zero exit code — they were not actually testing validation. | Added the missing set-targets handler to run(). Re-ran tests and confirmed the success-path test (which could only pass with correct routing) now passes, and no test's stderr shows "Unknown command." | Self (Anuj Sharma) |
 ## Cross-check against clarification log
 All of A-01 through A-17 were checked against the spec. Every decision
 and assumption in the clarification log is reflected correctly in the
