@@ -99,13 +99,13 @@
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py src/calorie_tracker/repository.py` succeeds; acceptance behavior is verified in T017.
 
-- [ ] T016 [US2] Add the `set-targets` command with required `--calories` and `--protein` flags, clear output, non-zero validation/storage failure handling, and command tests in `src/calorie_tracker/cli.py` and `tests/cli/test_target_commands.py`.  
+- [x] T016 [US2] Add the `set-targets` command with required `--calories` and `--protein` flags, clear output, non-zero validation/storage failure handling, and command tests in `src/calorie_tracker/cli.py` and `tests/cli/test_target_commands.py`.  
   **Covers**: AC-010, AC-011, AC-021  
   **Done when**: `uv run pytest tests/cli/test_target_commands.py` passes valid paired target and invalid-value cases in the same file.
 
 ### Automated Acceptance Tests
 
-- [ ] T017 [US2] Add target acceptance tests named `test_tc010_ac010_...`, `test_tc011_ac011_...`, and `test_tc012_ac012_...` in `tests/integration/test_target_acceptance.py`; assert rejected partial/invalid target input leaves the target history unchanged.  
+- [x] T017 [US2] Add target acceptance tests named `test_tc010_ac010_...`, `test_tc011_ac011_...`, and `test_tc012_ac012_...` in `tests/integration/test_target_acceptance.py`; assert rejected partial/invalid target input leaves the target history unchanged.  
   **Covers**: AC-010, AC-011, AC-012  
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_target_acceptance.py` passes all paired target, bound, precision, and historical-effective-date cases.
@@ -118,7 +118,7 @@
 
 ### Implementation
 
-- [ ] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
+- [x] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
   **Covers**: AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; acceptance behavior is verified in T020.
 
