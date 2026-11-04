@@ -16,7 +16,7 @@ from .validation import ValidationError  # re-exported for convenience
 from datetime import date as _date
 
 from . import repository
-from .models import Meal
+from .models import Meal,Target
 from .validation import validate_calories, validate_meal_date, validate_name, validate_protein
 
 class DomainError(Exception):
@@ -99,3 +99,32 @@ def delete_meal(conn, meal_id: int) -> None:
     deleted = run_safely("delete meal", repository.delete_meal, conn, meal_id)
     if not deleted:
         raise UnknownMealError(meal_id)
+
+def set_targets(conn, calories_raw, protein_raw, today=None) -> Target:
+    """Validate and set/change today's daily calorie and protein
+    targets together.
+
+    Both values are fully validated before any write (AC-011) — a
+    rejection leaves the previous target history completely
+    unchanged. Earlier effective dates are never modified; this only
+    affects today forward (AC-012, BR-06).
+
+    `today` is injectable for testing; defaults to the real local date.
+    """
+    if today is None:
+        today = _date.today()
+
+    calories_tenths = validate_calories(calories_raw)
+    protein_tenths = validate_protein(protein_raw)
+
+    run_safely(
+        "set targets",
+        repository.upsert_target,
+        conn, today, calories_tenths, protein_tenths,
+    )
+
+    return Target(
+        effective_date=today,
+        calories_tenths=calories_tenths,
+        protein_tenths=protein_tenths,
+    )

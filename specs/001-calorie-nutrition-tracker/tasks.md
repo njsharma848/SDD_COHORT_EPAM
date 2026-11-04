@@ -94,7 +94,7 @@
 
 ### Implementation
 
-- [ ] T015 [US2] Implement paired target validation and effective-date upsert in `src/calorie_tracker/service.py` and `src/calorie_tracker/repository.py`; validate both values before mutation, use local today, and retain prior effective dates.  
+- [x] T015 [US2] Implement paired target validation and effective-date upsert in `src/calorie_tracker/service.py` and `src/calorie_tracker/repository.py`; validate both values before mutation, use local today, and retain prior effective dates.  
   **Covers**: AC-010, AC-011, AC-012  
   **Supports**: P-3  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py src/calorie_tracker/repository.py` succeeds; acceptance behavior is verified in T017.
