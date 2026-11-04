@@ -16,6 +16,8 @@
 
 | R-08 | tests/cli/test_progress_command.py | Test design error — target effective_date postdated the meal date | `test_progress_with_target_shows_calories_and_protein_lines` recorded a meal dated 2026-11-03 but called set-targets with no `today` override, so the target's effective_date became the real system date (2026-11-04) — after the meal date. Per BR-06, a target applies only from its effective date forward, so `get_progress` for 2026-11-03 correctly reported "no target set." The test's expectation, not the code, was wrong. | Rewrote the test to use the real system "today" consistently across the add-meal, set-targets, and progress calls (all default to today when no date/--date is given), removing the hardcoded past date that caused the mismatch. Re-ran and confirmed the test now passes for the right reason — asserting on actual Calories/Protein lines, not just exit code. | Self (Anuj Sharma) |
 
+| R-09 | spec.md, BR-05/FR-006/AC-010 | Spec drift resurfaced after being marked fixed | spec.md still stated target maximums as 20,000 kcal / 2,000 g — the exact post-drift values R-03/R-04 previously recorded as reverted to the 10,000/1,000 baseline. The actual code (validation.py's MAX_CALORIES_TENTHS/MAX_PROTEIN_TENTHS, shared by create_meal and set_targets) already enforces 10,000/1,000, so spec and code had silently diverged again. | Re-edited BR-05, FR-006, and AC-010 to state 10,000 kcal / 1,000 g, matching the confirmed targetLimits=same_as_meals decision (A-15) and the code's actual behavior. | Self (Anuj Sharma) |
+
 ## Cross-check against clarification log
 All of A-01 through A-17 were checked against the spec. Every decision
 and assumption in the clarification log is reflected correctly in the
