@@ -146,17 +146,17 @@
   **Supports**: P-1, P-2  
   **Done when**: The matrix contains exactly 22 acceptance-criterion rows, all with test links, and all 14 FR IDs have a component mapping.
 
-- [ ] T023 Write the root `README.md` with the project purpose, Python/uv setup, test command, CLI command examples, and expected behavior linked to `specs/001-calorie-nutrition-tracker/contracts/cli.md` and `quickstart.md`; do not document out-of-scope capabilities.  
+- [x] T023 Write the root `README.md` with the project purpose, Python/uv setup, test command, CLI command examples, and expected behavior linked to `specs/001-calorie-nutrition-tracker/contracts/cli.md` and `quickstart.md`; do not document out-of-scope capabilities.  
   **Covers**: AC-001, AC-009, AC-010, AC-013, AC-021  
   **Supports**: P-1, P-4, P-6  
   **Done when**: Every command documented in `README.md` matches the CLI contract and the setup/test instructions in `specs/001-calorie-nutrition-tracker/quickstart.md`.
 
-- [ ] T024 Write `docs/validation-plan.md` with a field-by-field invalid/boundary test checklist and unchanged-data assertion for each rejected mutation, linked to the validation and integration tests.  
+- [x] T024 Write `docs/validation-plan.md` with a field-by-field invalid/boundary test checklist and unchanged-data assertion for each rejected mutation, linked to the validation and integration tests.  
   **Covers**: AC-003, AC-006b, AC-007, AC-011, AC-020  
   **Supports**: P-3  
   **Done when**: Every invalid condition in BR-12 has a named automated test and an explicit persisted-data unchanged check.
 
-- [ ] T025 Run the full test suite and save the exact command and successful output as `screenshots/test-run-output.txt`; capture a CLI demo showing add, set-targets, progress, and delete in `screenshots/cli-demo.png`.  
+- [x] T025 Run the full test suite and save the exact command and successful output as `screenshots/test-run-output.txt`; capture a CLI demo showing add, set-targets, progress, and delete in `screenshots/cli-demo.png`.  
   **Covers**: AC-001, AC-009, AC-010, AC-013, AC-021  
   **Supports**: P-2, P-7  
   **Done when**: `uv run pytest` exits successfully, `screenshots/test-run-output.txt` records that run, and the CLI demo visibly shows the four required commands with successful outcomes.
