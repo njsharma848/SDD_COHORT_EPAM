@@ -88,3 +88,22 @@ def validate_meal_date(raw: str | None, today: date) -> date:
         raise ValidationError("date", "must not be in the future")
 
     return parsed
+
+def parse_date(raw: str | None, today: date) -> date:
+    """Parse an optional date string for read-only use (e.g. the
+    progress command), defaulting to today.
+
+    Unlike validate_meal_date, this does NOT reject future dates —
+    viewing progress for a future (empty) day is allowed; only
+    *logging a meal* on a future date is forbidden (plan.md Risks
+    table: a deliberate, documented distinction).
+    """
+    if raw is None or str(raw).strip() == "":
+        return today
+    try:
+        return date.fromisoformat(str(raw).strip())
+    except ValueError:
+        raise ValidationError("date", "must be a valid YYYY-MM-DD date") from None
+
+
+    
