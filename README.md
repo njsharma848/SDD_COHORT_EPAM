@@ -96,7 +96,7 @@ scope for this assignment's fundamentals-level tracker.
 
 ## AI-use statement
 
-This project was built with AI assistance (Claude) throughout the
+This project was built with AI assistance throughout the
 SDD lifecycle - constitution drafting, specification and
 clarification, planning, task breakdown, and implementation. Every
 AI-generated artifact was reviewed line by line; genuine defects the
