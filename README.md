@@ -1,4 +1,4 @@
-﻿# Calorie and Nutrition Tracker
+# Calorie and Nutrition Tracker
 
 A single-user, command-line calorie and nutrition tracker, built
 using Spec-Driven Development (SDD) for EPAM's SDD cohort
@@ -108,3 +108,4 @@ effective-dates) were caught, diagnosed, and fixed - see
 `docs/review-record.md` (R-01 through R-09a) for the full record of
 findings and `docs/prompt-log.md` for the prompt-by-prompt history of
 what was accepted, modified, or rejected.
+
