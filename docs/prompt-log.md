@@ -253,6 +253,7 @@
   the wrong reason; logged as R-07 in docs/review-record.md.
 
 
+
 ### Entry 8: Quickstart validation (T026)
 
 **Step:** T026 — validate `specs/001-calorie-nutrition-tracker/quickstart.md` against actual working commands.
