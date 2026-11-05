@@ -118,17 +118,17 @@
 
 ### Implementation
 
-- [ ] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
+- [x] T018 [US3] Implement progress calculation in `src/calorie_tracker/service.py`: aggregate only the selected date, default to local today, look up the latest effective target, calculate signed remaining tenths, and apply calorie/protein tolerances of 50/10 tenths.  
   **Covers**: AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019  
   **Done when**: `uv run python -m compileall src/calorie_tracker/service.py` succeeds; acceptance behavior is verified in T020.
 
-- [ ] T019 [US3] Add the `progress` argparse command and CLI tests; render one-decimal totals, show `no target set` without remaining/status when no target applies, otherwise show target, signed remaining, and each status in `src/calorie_tracker/cli.py` and `tests/cli/test_progress_command.py`.  
+- [x] T019 [US3] Add the `progress` argparse command and CLI tests; render one-decimal totals, show `no target set` without remaining/status when no target applies, otherwise show target, signed remaining, and each status in `src/calorie_tracker/cli.py` and `tests/cli/test_progress_command.py`.  
   **Covers**: AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019  
   **Done when**: `uv run pytest tests/cli/test_progress_command.py` passes targeted-date, no-meal/no-target, and target progress output tests in that file.
 
 ### Automated Acceptance Tests
 
-- [ ] T020 [US3] Add progress acceptance tests named `test_tc013_ac013_...` through `test_tc019_ac019_...` in `tests/integration/test_progress_acceptance.py`, including exact target, both sides of both tolerance boundaries, and over-target negative remaining values.  
+- [x] T020 [US3] Add progress acceptance tests named `test_tc013_ac013_...` through `test_tc019_ac019_...` in `tests/integration/test_progress_acceptance.py`, including exact target, both sides of both tolerance boundaries, and over-target negative remaining values.  
   **Covers**: AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019  
   **Done when**: `uv run pytest tests/integration/test_progress_acceptance.py` passes all selected-day and progress calculation cases.
 
@@ -136,12 +136,12 @@
 
 **Purpose**: Complete acceptance coverage and the project's required learning/demonstration artifacts.
 
-- [ ] T021 Add the end-to-end safe-failure test `test_tc020_ac020_rejected_mutations_leave_all_data_unchanged` in `tests/integration/test_safe_failure.py`, covering rejected meal creation, target setting, and unknown deletion with pre-existing records.  
+- [x] T021 Add the end-to-end safe-failure test `test_tc020_ac020_rejected_mutations_leave_all_data_unchanged` in `tests/integration/test_safe_failure.py`, covering rejected meal creation, target setting, and unknown deletion with pre-existing records.  
   **Covers**: AC-020  
   **Supports**: P-3  
   **Done when**: `uv run pytest tests/integration/test_safe_failure.py` confirms errors are clear and meals/targets remain unchanged.
 
-- [ ] T022 Build `docs/traceability-matrix.md` mapping every AC-001 through AC-021 (with AC-006a and AC-006b replacing AC-006) to its automated test name and mapping FR-001 through FR-014 to the implementing module/task.  
+- [x] T022 Build `docs/traceability-matrix.md` mapping every AC-001 through AC-021 (with AC-006a and AC-006b replacing AC-006) to its automated test name and mapping FR-001 through FR-014 to the implementing module/task.  
   **Covers**: AC-001, AC-002, AC-003, AC-004, AC-005, AC-006a, AC-006b, AC-007, AC-008, AC-009, AC-010, AC-011, AC-012, AC-013, AC-014, AC-015, AC-016, AC-017, AC-018, AC-019, AC-020, AC-021  
   **Supports**: P-1, P-2  
   **Done when**: The matrix contains exactly 22 acceptance-criterion rows, all with test links, and all 14 FR IDs have a component mapping.
