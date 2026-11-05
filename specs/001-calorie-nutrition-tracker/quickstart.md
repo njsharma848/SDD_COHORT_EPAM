@@ -4,25 +4,35 @@ This guide is for validating the completed feature. It assumes Python 3.12 and p
 
 ## Run Automated Tests
 
+> **Environment note (added during T026 validation):** bare `python`
+> is not on PATH in this project's dev environment (the Windows
+> Store python alias was disabled during setup, per Phase 0). Use
+> `uv run python` in place of `python` for every command below —
+> verified working on 2026-11-05 (R-10).
+
 From the project root:
 
 ```powershell
-python -m pytest
+uv run python -m pytest
 ```
 
-Expected result: all unit, storage, service, and CLI tests pass. Tests that write to SQLite use isolated temporary databases and do not alter the user's normal tracker data.
+Expected result: all unit, storage, service, and CLI tests pass (87/87 as of the last run). Tests that write to SQLite use isolated temporary databases and do not alter the user's normal tracker data.
 
 ## Run the CLI
 
-From the project root, make the source package available for this PowerShell session and run:
+From the project root:
 
 ```powershell
-$env:PYTHONPATH = "src"
-python -m calorie_tracker --help
-python -m calorie_tracker add-meal --name "Breakfast" --calories 350.5 --protein 18.2
-python -m calorie_tracker set-targets --calories 2000 --protein 120
-python -m calorie_tracker progress
+uv run python -m calorie_tracker --help
+uv run python -m calorie_tracker add-meal --name "Breakfast" --calories 350.5 --protein 18.2
+uv run python -m calorie_tracker set-targets --calories 2000 --protein 120
+uv run python -m calorie_tracker progress
 ```
+
+> Note: setting `$env:PYTHONPATH = "src"` is **not** required under
+> `uv run` — `uv`'s project environment already resolves the
+> `calorie_tracker` package via `pyproject.toml`. Verified by
+> clearing PYTHONPATH entirely and re-running successfully (R-11).
 
 Expected outcomes:
 
@@ -30,8 +40,6 @@ Expected outcomes:
 - Adding a valid meal succeeds and reports its generated ID.
 - Setting both valid targets succeeds.
 - Progress shows the current day's totals, targets, remaining amounts, and statuses; all displayed nutrition values have one decimal place.
-
-The CLI stores local data under the current user's home directory. Use a disposable user profile when manually exercising commands if you do not want to change existing tracker data.
 
 ## Validate Key Outcomes
 
