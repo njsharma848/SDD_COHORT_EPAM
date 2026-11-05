@@ -251,3 +251,18 @@
   command" in any test.
 - Lesson applied: a test asserting only "exit code != 0" can pass for
   the wrong reason; logged as R-07 in docs/review-record.md.
+
+
+### Entry 8: Quickstart validation (T026)
+
+**Step:** T026 — validate `specs/001-calorie-nutrition-tracker/quickstart.md` against actual working commands.
+
+**Tool:** Manual verification (PowerShell), no AI-generated code this step.
+
+**Key output:** Ran the quickstart's literal commands as written. `python -m pytest` and `python -m calorie_tracker ...` failed outright — `python` is not on PATH in this environment (Windows Store alias disabled in Phase 0 setup). Substituted `uv run python -m pytest` / `uv run python -m calorie_tracker ...`, which worked correctly (87/87 tests passing; CLI help, add-meal, set-targets, progress all matched documented expected outcomes). Also tested the quickstart's `$env:PYTHONPATH = "src"` step by clearing PYTHONPATH entirely (`Remove-Item Env:PYTHONPATH`, confirmed empty) and re-running — `uv run python -m calorie_tracker --help` still worked, proving that step is unnecessary under `uv run`.
+
+**Review findings:** Two genuine defects in the Spec-Kit-generated quickstart.md, both environment-specific rather than logic errors: (1) assumes bare `python` is callable (R-10); (2) includes an unnecessary PYTHONPATH step that only applies to bare `python`, not `uv run` (R-11). Confirmed `contracts/cli.md` and `data-model.md`, both referenced from quickstart.md, exist and are not broken links.
+
+**Decision:** Corrected quickstart.md's "Run Automated Tests" and "Run the CLI" sections to use `uv run python` throughout, removed the PYTHONPATH line, and added inline notes pointing to R-10/R-11 for anyone wondering why the commands differ from the originally generated version.
+
+**Screenshot:** N/A (text-only verification step; covered by the terminal outputs already captured in `screenshots/test-run-output.txt`/`.png`).
