@@ -161,7 +161,7 @@
   **Supports**: P-2, P-7  
   **Done when**: `uv run pytest` exits successfully, `screenshots/test-run-output.txt` records that run, and the CLI demo visibly shows the four required commands with successful outcomes.
 
-- [ ] T026 Complete the quickstart validation from `specs/001-calorie-nutrition-tracker/quickstart.md` and record any deviations in `docs/prompt-log.md`; make no scope changes without updating the spec and review record first.  
+- [x] T026 Complete the quickstart validation from `specs/001-calorie-nutrition-tracker/quickstart.md` and record any deviations in `docs/prompt-log.md`; make no scope changes without updating the spec and review record first.  
   **Covers**: AC-001, AC-003, AC-009, AC-010, AC-012, AC-013, AC-017, AC-018, AC-019, AC-020  
   **Supports**: P-1, P-7  
   **Done when**: Every quickstart scenario has a recorded pass result and any AI-assisted changes are logged with prompt, output, decision, and reasoning in `docs/prompt-log.md`.
